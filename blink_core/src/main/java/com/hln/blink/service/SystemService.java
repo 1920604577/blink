@@ -1,6 +1,12 @@
 package com.hln.blink.service;
 
 import com.hln.blink.pojo.vo.ResponseVo;
+import io.swagger.annotations.ApiOperation;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import java.io.IOException;
 
 public interface SystemService {
 
@@ -10,7 +16,7 @@ public interface SystemService {
      * @param token
      * @return
      */
-    public ResponseVo isAuth(String token);
+    public ResponseVo auth(String token);
 
     /**
      * @author hln 2024-4-30

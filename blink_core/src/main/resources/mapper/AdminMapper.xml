@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hln.blink.mapper.AdminMapper">
+
+    <sql id="adminSql">
+        id,user_id,`role`,del_flag
+    </sql>
+
+    <!-- 添加admin -->
+    <insert id="addAdmin">
+        insert into
+            admin
+            (user_id,role)
+        values
+            (#{userId},#{role})
+    </insert>
+
+    <!-- 根据id修改用户 -->
+    <update id="updateAdminById">
+        update
+            admin
+        set
+            role = #{role}
+        where
+            user_id = #{userId}
+        and
+            del_flag = 0
+        limit 1
+    </update>
+
+    <!-- 根据id删除用户(逻辑删除) -->
+    <update id="deleteUserById">
+        update
+            admin
+        set
+            del_flag = 1
+        where
+            user_id = #{userId}
+        limit 1
+    </update>
+
+    <!-- 查询admin -->
+    <select id="queryUserById" resultType="com.hln.blink.pojo.vo.AdminVo">
+        select
+            u.username,u.sex,u.birth_data,a.role
+        from
+            admin a
+        inner join
+            user u
+        on
+            a.user_id = #{userId}
+        and
+            a.del_flag = 0
+        and
+            u.id = #{userId}
+        and
+            u.del_flag = 0
+        limit 1
+    </select>
+
+    <!-- 查询所有 -->
+    <select id="findAll" resultType="com.hln.blink.pojo.vo.AdminVo">
+        select
+            u.id,u.username,u.sex,u.birth_data,a.role
+        from
+            admin a
+        inner join
+            user u
+        on
+            a.user_id = u.id
+        and
+            a.del_flag = 0
+        and
+            u.del_flag = 0
+        order by
+            a.role
+        desc
+    </select>
+
+    <!-- 根据id查role -->
+    <select id="queryRoleById" resultType="java.lang.Integer">
+        select
+            role
+        from
+            admin
+        where
+            user_id = #{id}
+    </select>
+
+</mapper>

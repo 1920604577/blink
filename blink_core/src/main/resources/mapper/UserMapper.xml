@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hln.blink.mapper.UserMapper">
+
+    <sql id="userSql">
+        id,username,password,sex,birth_data,del_flag
+    </sql>
+
+    <!-- 用户注册 -->
+    <insert id="insertUser">
+        insert into
+            user
+            (username,password,sex,birth_data)
+        values
+            (#{username},#{password},#{sex},#{birthData})
+    </insert>
+
+    <!-- 根据id修改用户 -->
+    <update id="updateUserById">
+        update
+            user
+        <set>
+            <if test="username != null and username != ''">
+                username = #{username},
+            </if>
+            <if test="sex != null and sex != ''">
+                sex = #{sex},
+            </if>
+            <if test="birthData != null">
+                birth_data = #{birthData}
+            </if>
+        </set>
+        where
+            id = #{id}
+        and
+            del_flag = 0
+        limit 1
+    </update>
+
+    <!-- 根据id删除用户(逻辑删除) -->
+    <update id="deleteUserById">
+        update
+            user
+        set
+            del_flag = 1
+        where
+            id = #{id}
+        limit 1
+    </update>
+
+    <!-- 用户登录 -->
+    <select id="login" resultType="com.hln.blink.pojo.User">
+        select
+            <include refid="userSql"/>
+        from
+            user
+        where
+            username = #{username}
+        and
+            password = #{password}
+        limit 1
+    </select>
+
+    <!-- 根据id查询用户 -->
+    <select id="queryUserById" resultType="com.hln.blink.pojo.User">
+        select
+            <include refid="userSql"/>
+        from
+            user
+        where
+            id = #{id}
+        and
+            del_flag = 0
+        limit 1
+    </select>
+
+    <!-- 查询所有 -->
+    <select id="findAll" resultType="com.hln.blink.pojo.User">
+        select
+            <include refid="userSql"/>
+        from
+            user
+        where
+            del_flag = 0
+    </select>
+
+    <!-- 根据username找user -->
+    <select id="queryUserByName" resultType="com.hln.blink.pojo.User">
+        select
+            <include refid="userSql"/>
+        from
+            user
+        where
+            username = #{username}
+        limit 1
+    </select>
+
+</mapper>

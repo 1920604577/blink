@@ -1,7 +1,7 @@
 package com.hln.blink.util;
 
 
-import com.gsxy.core.pojo.User;
+import com.hln.blink.pojo.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtBuilder;
 import io.jsonwebtoken.Jwts;
