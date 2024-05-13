@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hln.blink.mapper.DatingInvitationsMapper">
+
+    <sql id="DatingInvitationsSql">
+        id,sender_id,receiver_id,message,invitation_date,invitation_status,del_flag
+    </sql>
+
+    <insert id="addDatingInvitations">
+        insert into
+            dating_invitations
+            (sender_id,receiver_id,message,invitation_date)
+        values
+            (#{senderId},#{receiverId},#{message},#{invitationDate})
+    </insert>
+
+    <update id="deleteDatingInvitationsById">
+        update
+            dating_invitations
+        set
+            del_flag = 1
+        where
+            id = #{id}
+    </update>
+
+    <update id="updateDatingInvitationsById">
+        update
+            dating_invitations
+        <set>
+            <if test="senderId != null">
+                sender_id = #{senderId},
+            </if>
+            <if test="receiverId != null">
+                receiver_id = #{receiverId},
+            </if>
+            <if test="message != null and message != ''">
+                message = #{message},
+            </if>
+            <if test="invitationDate != null">
+                invitation_date = #{invitationDate},
+            </if>
+        </set>
+        where
+            id = #{id}
+        limit 1
+    </update>
+
+    <update id="handleNo">
+        update
+            dating_invitations
+        set
+            invitation_status = 2
+        where
+            id = #{id}
+        limit 1
+    </update>
+
+    <update id="handleYes">
+        update
+            dating_invitations
+        set
+            invitation_status = 1
+        where
+            id = #{id}
+        limit 1
+    </update>
+
+    <select id="queryDatingInvitationsById" resultType="com.hln.blink.pojo.DatingInvitations">
+        select
+            <include refid="DatingInvitationsSql"/>
+        from
+            dating_invitations
+        where
+            id = #{id}
+        limit 1
+    </select>
+
+    <select id="findAll" resultType="com.hln.blink.pojo.vo.DatingInvitationsVo">
+        select
+            d.id,p.`name`,d.sender_id,d.receiver_id,d.message,d.invitation_date,
+            d.invitation_status,d.del_flag
+        from
+            dating_invitations d
+        inner join
+            profiles p
+        on
+            p.user_id = d.sender_id
+        and
+            p.del_flag = 0
+        and
+            d.invitation_status = 0
+    </select>
+
+    <select id="queryAllByUserId" resultType="com.hln.blink.pojo.vo.DatingInvitationsVo">
+        select
+            d.id,p.`name`,d.sender_id,d.receiver_id,d.message,d.invitation_date,
+            d.invitation_status,d.del_flag
+        from
+            dating_invitations d
+        inner join
+            profiles p
+        on
+            p.user_id = d.sender_id
+        and
+            p.del_flag = 0
+        and
+            d.invitation_status != 0
+        and
+            p.user_id = #{userId}
+    </select>
+
+</mapper>

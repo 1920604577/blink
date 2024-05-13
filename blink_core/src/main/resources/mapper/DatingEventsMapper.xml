@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hln.blink.mapper.DatingEventsMapper">
+
+    <sql id="DatingInvitationsSql">
+        id,event_date,message,location,participant1_id,participant2_id,del_flag
+    </sql>
+
+    <insert id="addDatingEvents">
+        insert into
+            dating_events
+            (event_date,message,location,participant1_id,participant2_id)
+        values
+            (#{eventDate},#{message},#{location},#{participant1Id},#{participant2Id})
+    </insert>
+
+    <update id="queryDatingEventsById">
+        update
+            dating_events
+        set
+            del_flag = 1
+        where
+            id = #{id}
+    </update>
+
+    <update id="updateDatingEventsById">
+        update
+            dating_events
+        <set>
+            <if test="eventDate != null">
+                event_date = #{eventDate},
+            </if>
+            <if test="message != null and message != ''">
+                message = #{message},
+            </if>
+            <if test="location != null and location != ''">
+                location = #{location},
+            </if>
+            <if test="participant2Id != null">
+                participant2_id = #{participant2Id},
+            </if>
+        </set>
+        where
+            id = #{id}
+        limit 1
+    </update>
+
+    <update id="deleteDatingEventsById">
+        update
+            dating_events
+        set
+            del_flag = 1
+        where
+            id = #{id}
+        limit 1
+    </update>
+
+    <select id="findAll" resultType="com.hln.blink.pojo.DatingEvents">
+        select
+            <include refid="DatingInvitationsSql"/>
+        from
+            dating_events
+    </select>
+
+    <select id="queryAllByUserId" resultType="com.hln.blink.pojo.vo.DatingEventsVo">
+        select
+            d.id,d.event_date,p.name,d.message,d.location,d.participant1_id
+             ,d.participant2_id,d.del_flag
+        from
+            dating_events d
+        inner join
+            profiles p
+        on
+            d.participant2_id = p.user_id
+        and
+            d.participant1_id = #{userId}
+        and
+            d.del_flag = 0
+    </select>
+
+</mapper>
