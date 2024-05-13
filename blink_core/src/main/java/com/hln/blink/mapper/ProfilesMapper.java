@@ -5,6 +5,7 @@ import com.hln.blink.pojo.bo.ProfilesAddBo;
 import com.hln.blink.pojo.bo.ProfilesQueryBo;
 import com.hln.blink.pojo.bo.ProfilesUpdateBo;
 import com.hln.blink.pojo.bo.DeleteProfilesByIdBo;
+import com.hln.blink.pojo.vo.ProfilesVo;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -45,10 +46,10 @@ public interface ProfilesMapper {
     Long deleteProfilesById(DeleteProfilesByIdBo deleteProfilesByIdBo);
 
     /**
+     * @return
      * @author hln 2024-5-7
      * 查询所有
-     * @return
      */
-    List<Profiles> findAll();
+    List<ProfilesVo> findAll();
 
 }

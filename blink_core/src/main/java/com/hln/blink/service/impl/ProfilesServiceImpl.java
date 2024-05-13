@@ -7,6 +7,7 @@ import com.hln.blink.pojo.bo.ProfilesAddBo;
 import com.hln.blink.pojo.bo.ProfilesQueryBo;
 import com.hln.blink.pojo.bo.ProfilesUpdateBo;
 import com.hln.blink.pojo.vo.AdminVo;
+import com.hln.blink.pojo.vo.ProfilesVo;
 import com.hln.blink.pojo.vo.ResponseVo;
 import com.hln.blink.service.ProfilesService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -96,7 +97,7 @@ public class ProfilesServiceImpl implements ProfilesService {
      */
     @Override
     public ResponseVo findAll() {
-        List<Profiles> list = profilesMapper.findAll();
+        List<ProfilesVo> list = profilesMapper.findAll();
         return new ResponseVo<>("查询成功",list,"0x200");
     }
 }

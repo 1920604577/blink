@@ -1,6 +1,7 @@
 package com.hln.blink.service.impl;
 
 import com.hln.blink.mapper.AdminMapper;
+import com.hln.blink.mapper.ProfilesMapper;
 import com.hln.blink.mapper.UserMapper;
 import com.hln.blink.pojo.User;
 import com.hln.blink.pojo.bo.*;
@@ -23,6 +24,8 @@ public class UserServiceImpl implements UserService {
     private UserMapper userMapper;
     @Autowired
     private AdminMapper adminMapper;
+    @Autowired
+    private ProfilesMapper profilesMapper;
 
     /**
      * @author hln 2024-4-30
@@ -117,8 +120,11 @@ public class UserServiceImpl implements UserService {
     public ResponseVo deleteUserById(DeleteUserByIdBo deleteUserByIdBo) {
 
         Long aLong = userMapper.deleteUserById(deleteUserByIdBo);
+        DeleteProfilesByIdBo deleteProfilesByIdBo = new DeleteProfilesByIdBo();
+        deleteProfilesByIdBo.setUserId(deleteUserByIdBo.getId());
+        Long pLong = profilesMapper.deleteProfilesById(deleteProfilesByIdBo);
 
-        if (aLong.longValue() == 0L) {
+        if (aLong.longValue() == 0L && pLong.longValue() == 0L) {
             return new ResponseVo<>("删除失败",null,"0x455");
         }
 

@@ -17,6 +17,7 @@ public class DatingEvents implements Serializable {
      * 相亲活动日期
      */
     private Date eventDate;
+    private String message;
     /**
      * 相亲活动地点
      */
@@ -34,6 +35,26 @@ public class DatingEvents implements Serializable {
      */
     private Integer delFlag;
 
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    @Override
+    public String toString() {
+        return "DatingEvents{" +
+                "id=" + id +
+                ", eventDate=" + eventDate +
+                ", message='" + message + '\'' +
+                ", location='" + location + '\'' +
+                ", participant1Id=" + participant1Id +
+                ", participant2Id=" + participant2Id +
+                ", delFlag=" + delFlag +
+                '}';
+    }
 
     public Long getId() {
         return id;

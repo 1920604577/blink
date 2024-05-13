@@ -6,6 +6,8 @@ public class ProfilesUpdateBo implements Serializable {
 
     private String token;
     private Long userId;
+    private String name;
+    private String img;
     private Integer height;//身高
     private String educationLevel;//学历
     private String occupation;//职业
@@ -14,9 +16,11 @@ public class ProfilesUpdateBo implements Serializable {
 
     public ProfilesUpdateBo(){}
 
-    public ProfilesUpdateBo(String token, Long userId, Integer height, String educationLevel, String occupation, String interestsHobbies, String selfDescription) {
+    public ProfilesUpdateBo(String token, Long userId, String name, String img, Integer height, String educationLevel, String occupation, String interestsHobbies, String selfDescription) {
         this.token = token;
         this.userId = userId;
+        this.name = name;
+        this.img = img;
         this.height = height;
         this.educationLevel = educationLevel;
         this.occupation = occupation;
@@ -80,11 +84,21 @@ public class ProfilesUpdateBo implements Serializable {
         this.selfDescription = selfDescription;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
     @Override
     public String toString() {
         return "ProfilesUpdateBo{" +
                 "token='" + token + '\'' +
                 ", userId=" + userId +
+                ", name='" + name + '\'' +
+                ", img='" + img + '\'' +
                 ", height=" + height +
                 ", educationLevel='" + educationLevel + '\'' +
                 ", occupation='" + occupation + '\'' +

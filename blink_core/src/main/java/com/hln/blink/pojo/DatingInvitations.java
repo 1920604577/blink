@@ -21,6 +21,7 @@ public class DatingInvitations implements Serializable {
      * 接收者ID
      */
     private Long receiverId;
+    private String message;
     /**
      * 邀请日期
      */
@@ -34,6 +35,25 @@ public class DatingInvitations implements Serializable {
      */
     private Integer delFlag;
 
+    public DatingInvitations(Long id, Long senderId, Long receiverId, String message, Date invitationDate, Integer invitationStatus, Integer delFlag) {
+        this.id = id;
+        this.senderId = senderId;
+        this.receiverId = receiverId;
+        this.message = message;
+        this.invitationDate = invitationDate;
+        this.invitationStatus = invitationStatus;
+        this.delFlag = delFlag;
+    }
+
+    public DatingInvitations(){}
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
 
     public Long getId() {
         return id;
@@ -83,5 +103,17 @@ public class DatingInvitations implements Serializable {
         this.delFlag = delFlag;
     }
 
+    @Override
+    public String toString() {
+        return "DatingInvitations{" +
+                "id=" + id +
+                ", senderId=" + senderId +
+                ", receiverId=" + receiverId +
+                ", message='" + message + '\'' +
+                ", invitationDate=" + invitationDate +
+                ", invitationStatus=" + invitationStatus +
+                ", delFlag=" + delFlag +
+                '}';
+    }
 }
 

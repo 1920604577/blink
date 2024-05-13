@@ -5,16 +5,16 @@
 <mapper namespace="com.hln.blink.mapper.ProfilesMapper">
 
     <sql id="profilesSql">
-        id,user_id,height,education_level,occupation,interests_hobbies,self_description,del_flag
+        id,user_id,`name`,img,height,education_level,occupation,interests_hobbies,self_description,del_flag
     </sql>
 
     <!-- 添加 -->
     <insert id="addProfiles">
         insert into
             profiles
-            (user_id,height,education_level,occupation,interests_hobbies,self_description)
+            (user_id,name,height,education_level,occupation,interests_hobbies,self_description)
         values
-            (#{userId},#{height},#{educationLevel},#{occupation},#{interestsHobbies},#{selfDescription})
+            (#{userId},#{name},#{height},#{educationLevel},#{occupation},#{interestsHobbies},#{selfDescription})
     </insert>
 
     <!-- 根据userId删除个人信息 -->
@@ -30,9 +30,14 @@
 
     <!-- 修改 -->
     <update id="updateProfilesById">
-        update
-            profiles
+        update profiles
         <set>
+            <if test="name != null and name != ''">
+                name = #{name},
+            </if>
+            <if test="img != null and img != ''">
+                img = #{img},
+            </if>
             <if test="height != null">
                 height = #{height},
             </if>
@@ -46,7 +51,7 @@
                 interests_hobbies = #{interestsHobbies},
             </if>
             <if test="selfDescription != null">
-                self_description = #{selfDescription},
+                self_description = #{selfDescription}
             </if>
         </set>
         where
@@ -67,13 +72,18 @@
     </select>
 
     <!-- 查询所有 -->
-    <select id="findAll" resultType="com.hln.blink.pojo.Profiles">
+    <select id="findAll" resultType="com.hln.blink.pojo.vo.ProfilesVo">
         select
-            <include refid="profilesSql"/>
+            p.id,p.user_id,p.`name`,u.sex,p.img,p.height,p.education_level
+             ,p.occupation,p.interests_hobbies,p.self_description,p.del_flag
         from
-            profiles
-        order by
-            user_id
+            profiles p
+        inner join
+            user u
+        on
+            p.user_id = u.id
+        and
+            u.del_flag = 0
     </select>
 
 </mapper>

@@ -17,6 +17,14 @@ public class Profiles implements Serializable {
      */
     private Long userId;
     /**
+     * 姓名
+     */
+    private String name;
+    /**
+     * 图片路径
+     */
+    private String img;
+    /**
      * 身高
      */
     private Integer height;
@@ -106,5 +114,51 @@ public class Profiles implements Serializable {
         this.delFlag = delFlag;
     }
 
+    public String getImg() {
+        return img;
+    }
+
+    public void setImg(String img) {
+        this.img = img;
+    }
+
+    public Profiles(Long id, Long userId, String name, String img, Integer height, String educationLevel, String occupation, String interestsHobbies, String selfDescription, Integer delFlag) {
+        this.id = id;
+        this.userId = userId;
+        this.name = name;
+        this.img = img;
+        this.height = height;
+        this.educationLevel = educationLevel;
+        this.occupation = occupation;
+        this.interestsHobbies = interestsHobbies;
+        this.selfDescription = selfDescription;
+        this.delFlag = delFlag;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Profiles (){}
+
+    @Override
+    public String toString() {
+        return "Profiles{" +
+                "id=" + id +
+                ", userId=" + userId +
+                ", name='" + name + '\'' +
+                ", img='" + img + '\'' +
+                ", height=" + height +
+                ", educationLevel='" + educationLevel + '\'' +
+                ", occupation='" + occupation + '\'' +
+                ", interestsHobbies='" + interestsHobbies + '\'' +
+                ", selfDescription='" + selfDescription + '\'' +
+                ", delFlag=" + delFlag +
+                '}';
+    }
 }
 

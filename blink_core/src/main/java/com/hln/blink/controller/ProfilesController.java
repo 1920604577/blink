@@ -10,6 +10,10 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.File;
+import java.io.IOException;
 
 @CrossOrigin
 @Api(value = "个人信息描述板块接口",tags = {"个人信息描述板块接口"})
@@ -29,6 +33,22 @@ public class ProfilesController {
     @PostMapping("/add")
     @ApiOperation("添加个人信息")
     public String addProfiles(@RequestBody ProfilesAddBo profilesAddBo){
+//        String fileName = mpfile.getOriginalFilename();
+//        String filePath = System.getProperty("user.dir") + System.getProperty("file.separator") + "profiles";
+//        File file1 = new File(filePath);
+//        if (!file1.exists()){
+//            file1.mkdir();
+//        }
+//
+//        File dest = new File(filePath + System.getProperty("file.separator") + fileName);
+//        String storeUrlPath = "/img/profiles"+fileName;
+//
+//        try {
+//            mpfile.transferTo(dest);
+//            profilesAddBo.setImg(storeUrlPath);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
         return JSONArray.toJSONString(profilesService.addProfiles(profilesAddBo));
     }
 

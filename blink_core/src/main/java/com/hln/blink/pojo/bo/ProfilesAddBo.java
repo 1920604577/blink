@@ -6,6 +6,8 @@ public class ProfilesAddBo implements Serializable {
 
     private String token;
     private Long userId;
+    private String name;
+    private String img;
     private Integer height;//身高
     private String educationLevel;//学历
     private String occupation;//职业
@@ -14,14 +16,32 @@ public class ProfilesAddBo implements Serializable {
 
     public ProfilesAddBo(){}
 
-    public ProfilesAddBo(String token, Long userId, Integer height, String educationLevel, String occupation, String interestsHobbies, String selfDescription) {
+    public String getImg() {
+        return img;
+    }
+
+    public void setImg(String img) {
+        this.img = img;
+    }
+
+    public ProfilesAddBo(String token, Long userId, String name, String img, Integer height, String educationLevel, String occupation, String interestsHobbies, String selfDescription) {
         this.token = token;
         this.userId = userId;
+        this.name = name;
+        this.img = img;
         this.height = height;
         this.educationLevel = educationLevel;
         this.occupation = occupation;
         this.interestsHobbies = interestsHobbies;
         this.selfDescription = selfDescription;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public Long getUserId() {
@@ -85,6 +105,8 @@ public class ProfilesAddBo implements Serializable {
         return "ProfilesAddBo{" +
                 "token='" + token + '\'' +
                 ", userId=" + userId +
+                ", name='" + name + '\'' +
+                ", img='" + img + '\'' +
                 ", height=" + height +
                 ", educationLevel='" + educationLevel + '\'' +
                 ", occupation='" + occupation + '\'' +
